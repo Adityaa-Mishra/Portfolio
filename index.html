@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aditya Mishra - Portfolio</title>
+
+  <!-- Fonts and Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body data-theme="dark">
+  <canvas id="background-canvas"></canvas>
+
+  <header>
+    <nav class="container" aria-label="Primary Navigation">
+      <div class="logo" aria-label="Website Logo">Aditya Mishra</div>
+      <button class="nav-toggle" aria-label="toggle navigation menu" aria-expanded="false">
+        <i class="fas fa-bars"></i>
+      </button>
+      <ul class="nav-links">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li class="theme-toggle-li">
+          <button id="theme-toggle-mobile" aria-label="Toggle light and dark mode"><i class="fas fa-moon"></i></button>
+        </li>
+      </ul>
+      <button id="theme-toggle" aria-label="Toggle light and dark mode"><i class="fas fa-moon"></i></button>
+    </nav>
+  </header>
+
+  <section id="hero" class="hero" role="banner">
+    <div class="container">
+      <img src="photo.jpg" alt="Aditya Mishra" class="profile-img" />
+      <h1>Aditya Mishra</h1>
+      <p class="rotating-role" aria-live="polite" aria-atomic="true"></p>
+      <p class="bio">A passionate developer who loves building things for the web and is always excited to learn something new.</p>
+      <div class="cta-buttons">
+        <a href="#projects" class="btn" role="button" tabindex="0">View Projects</a>
+        <a href="Aditya Resume .pdf" download="Aditya Resume.pdf" class="btn btn-outline" role="button" tabindex="0">Download Resume</a>
+        <a href="#contact" class="btn" role="button" tabindex="0">Contact Me</a>
+      </div>
+      <div class="social-icons" role="list">
+        <a href="https://github.com/Adityaa-Mishra" target="_blank" rel="noopener" role="listitem" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/aditya-mishra-64a687394" target="_blank" rel="noopener" role="listitem" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        <a href="https://www.instagram.com/adityya_aryan/" target="_blank" rel="noopener" role="listitem" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="mailto:adityarya207@gmail.com" role="listitem" aria-label="Email"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="about" tabindex="-1">
+    <div class="container">
+      <h2 class="section-title">About Me</h2>
+      <div class="about-content" role="region" aria-label="About Me">
+        <p>I'm a software developer and tester who loves building efficient and user-friendly apps. My journey in tech is all about curiosity and a commitment to continuous learning. I get a real kick out of solving tricky problems and creating solutions that have a real impact.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" class="skills" tabindex="-1">
+    <div class="container">
+      <h2 class="section-title">Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-category" aria-label="Programming Languages">
+          <h3>Programming Languages</h3>
+          <ul>
+            <li>Python</li>
+            <li>C</li>
+            <li>C++</li>
+            <li>Java</li>
+            <li>Kotlin</li>
+            <li>JavaScript</li>
+          </ul>
+        </div>
+        <div class="skill-category" aria-label="Frameworks and Tools">
+          <h3>Frameworks & Tools</h3>
+          <ul>
+            <li>Git</li>
+            <li>GitHub</li>
+            <li>MERN Stack</li>
+            <li>VS Code</li>
+            <li>Android Studio</li>
+          </ul>
+        </div>
+        <div class="skill-category" aria-label="Databases">
+          <h3>Databases</h3>
+          <ul>
+            <li>SQL</li>
+            <li>MongoDB</li>
+          </ul>
+        </div>
+        <div class="skill-category" aria-label="Concepts">
+          <h3>Concepts</h3>
+          <ul>
+            <li>OOPS</li>
+            <li>Functional Programming</li>
+            <li>DSA</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Logo Loop Section -->
+      <div class="logo-loop-container" role="region" aria-label="Technology Skills Logos">
+        <div class="logo-track" id="logoTrack">
+          <!-- Logos will be dynamically inserted here -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="projects" tabindex="-1">
+    <div class="container">
+      <h2 class="section-title">Projects</h2>
+      <div class="projects-grid">
+        <article class="project-card" aria-label="QR Code Scanner project">
+          <h3>QR Code Scanner</h3>
+          <p>I built this web app to quickly scan QR codes using a device's camera. It was a fun challenge to work with browser media APIs.</p>
+          <a href="https://splendid-platypus-fb079b.netlify.app/" target="_blank" rel="noopener">View Project</a>
+        </article>
+        <article class="project-card" aria-label="Weather Web App project">
+          <h3>Weather Web App</h3>
+          <p>This app fetches and displays weather data from anywhere in the world. A great project for practicing how to work with third-party APIs.</p>
+          <a href="https://quiet-yeot-a90612.netlify.app/" target="_blank" rel="noopener">View Project</a>
+        </article>
+        <article class="project-card" aria-label="File Converter Web App project">
+          <h3>File Converter Web App</h3>
+          <p>A handy tool for converting files. I used Flask for the backend to handle the file processing. (Hosted on Render, so it might take a moment to wake up!)</p>
+          <a href="https://neww-3-xv91.onrender.com/" target="_blank" rel="noopener">View Project</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="education" class="education" tabindex="-1">
+    <div class="container">
+      <h2 class="section-title">Education</h2>
+      <div class="education-list" role="list">
+        <div class="education-item" role="listitem">Senior Secondary (PCM) – NIOS, 2025</div>
+        <div class="education-item" role="listitem">Secondary Education – New Shalimar Public School, New Delhi</div>
+        <div class="education-item" role="listitem">Diploma in Computer Science – DSEU (2023–2026)</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact" tabindex="-1">
+    <div class="container">
+      <h2 class="section-title">Contact</h2>
+      <p class="about-content" style="margin-bottom: 40px;">Have a question or want to work together? Leave your details and I'll get back to you.</p>
+      <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+        <!-- Web3Forms Access Key -->
+        <input type="hidden" name="access_key" value="1694d243-357c-487f-a1be-cc78859d97ae">
+        <input type="hidden" name="from_name" value="CV Contact Form">
+        <input type="hidden" name="subject" value="New Message from CV Portfolio">
+        <input type="hidden" name="email_to" value="adityarya207@gmail.com">
+        <input type="hidden" name="redirect" value="">
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" name="name" id="name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Your Email</label>
+          <input type="email" name="email" id="email" required>
+        </div>
+        <div class="form-group">
+          <label for="message">Your Message</label>
+          <textarea name="message" id="message" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="btn">Send Message</button>
+      </form>
+      <div id="form-result" class="about-content"></div>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

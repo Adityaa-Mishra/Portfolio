@@ -171,20 +171,23 @@ setupThemeToggle('theme-toggle-mobile', 'i');
 
 // --- Initial Setup and Event Listeners ---
 document.addEventListener('DOMContentLoaded', () => {
+  const onWindowResize = () => {
+    if (!currentCamera || !currentRenderer) return;
+    currentCamera.aspect = window.innerWidth / window.innerHeight;
+    currentCamera.updateProjectionMatrix();
+    currentRenderer.setSize(window.innerWidth, window.innerHeight);
+  };
+
   initLogoLoop();
   switch3DBackground(document.body.getAttribute('data-theme') || 'dark');
+  onWindowResize(); // Initial resize to set canvas correctly
 
   document.addEventListener('mousemove', (event) => {
     mouseX = (event.clientX - window.innerWidth / 2) / 100;
     mouseY = (event.clientY - window.innerHeight / 2) / 100;
   });
 
-  window.addEventListener('resize', () => {
-    if (!currentCamera || !currentRenderer) return;
-    currentCamera.aspect = window.innerWidth / window.innerHeight;
-    currentCamera.updateProjectionMatrix();
-    currentRenderer.setSize(window.innerWidth, window.innerHeight);
-  });
+  window.addEventListener('resize', onWindowResize);
 });
 
 // Mobile navigation toggle
@@ -304,12 +307,15 @@ const logos = [
   { name: 'GitHub', icon: 'fab fa-github', color: '#181717' },
   { name: 'MongoDB', icon: 'fas fa-leaf', color: '#13AA52' },
   { name: 'Java', icon: 'fab fa-java', color: '#007396' },
+  { name: 'Node.js', icon: 'fab fa-node-js', color: '#339933' },
+  { name: 'Express.js', svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="70" font-size="45" font-weight="bold" text-anchor="middle" fill="currentColor">Express</text></svg>', color: '#000000' },
 ];
 
 function initLogoLoop() {
   if (!logoTrack) return;
 
-  for (let cycle = 0; cycle < 2; cycle++) {
+  // Increased to 6 cycles for better mobile coverage
+  for (let cycle = 0; cycle < 6; cycle++) {
     logos.forEach(logo => {
       const logoItem = document.createElement('div');
       logoItem.className = 'logo-item';

@@ -508,7 +508,7 @@ ul li {
 .logo-track {
   display: flex;
   gap: 40px;
-  animation: scroll-left 12s linear infinite;
+  animation: scroll-left 40s linear infinite;
   will-change: transform;
   align-items: center;
   height: 100%;
@@ -521,10 +521,10 @@ ul li {
 
 @keyframes scroll-left {
   0% {
-    transform: translateX(0);
+    transform: translateX(0%);
   }
   100% {
-    transform: translateX(calc(-50% - 20px));
+    transform: translateX(calc(-1 * (12 * 120px + 11 * 40px))); /* Scroll one full set of logos */
   }
 }
 

@@ -211,11 +211,11 @@ navLinks.addEventListener('click', (e) => {
 
 // Rotating roles text effect
 const roles = [
-  "Software Developer",
-  "Software Tester",
-  "Software Engineer",
-  "Web Developer",
-  "Technology Enthusiast"
+  "Software Developer", // 1st
+  "Web Developer",      // 2nd
+  "Software Tester",    // 3rd
+  "Programmer",         // 4th
+  "Software Engineer"   // 5th
 ];
 const rotatingRole = document.querySelector('.rotating-role');
 let roleIndex = 0;
@@ -308,7 +308,7 @@ const logos = [
   { name: 'MongoDB', icon: 'fas fa-leaf', color: '#13AA52' },
   { name: 'Java', icon: 'fab fa-java', color: '#007396' },
   { name: 'Node.js', icon: 'fab fa-node-js', color: '#339933' },
-  { name: 'Express.js', svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="70" font-size="45" font-weight="bold" text-anchor="middle" fill="currentColor">Express</text></svg>', color: '#000000' },
+  { name: 'Express.js', svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="70" font-size="80" font-weight="bold" text-anchor="middle" fill="currentColor">Ex</text></svg>', color: '#000000' },
 ];
 
 function initLogoLoop() {

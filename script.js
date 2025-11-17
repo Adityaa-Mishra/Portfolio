@@ -319,8 +319,8 @@ function initLogoLoop() {
     logos.forEach(logo => {
       const logoItem = document.createElement('div');
       logoItem.className = 'logo-item';
-      if (logo.name === 'GitHub') {
-        logoItem.classList.add('github-logo');
+      if (logo.name === 'GitHub' || logo.name === 'Express.js') {
+        logoItem.classList.add('logo-inverted-bg');
       }
       let logoContent = '';
 

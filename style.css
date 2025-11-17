@@ -541,22 +541,22 @@ ul li {
   opacity: 0.8;
 }
 
-.logo-item.github-logo {
+.logo-item.logo-inverted-bg {
   background: rgba(255, 255, 255, 0.25);
   border-radius: 8px;
   padding: 12px;
   transition: background 0.3s ease;
 }
 
-.logo-item.github-logo:hover {
+.logo-item.logo-inverted-bg:hover {
   background: rgba(255, 255, 255, 0.35);
 }
 
-[data-theme="light"] .logo-item.github-logo {
+[data-theme="light"] .logo-item.logo-inverted-bg {
   background: rgba(0, 0, 0, 0.08);
 }
 
-[data-theme="light"] .logo-item.github-logo:hover {
+[data-theme="light"] .logo-item.logo-inverted-bg:hover {
   background: rgba(0, 0, 0, 0.15);
 }
 

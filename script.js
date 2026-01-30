@@ -1,342 +1,419 @@
-// 3D Library - dynamically load to avoid blocking render
-(function() {
-  const script = document.createElement('script');
-  script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
-  script.onload = () => {
-    try {
-      init3DBackground();
-    } catch (e) {
-      console.error("Could not initialize 3D background.", e);
-      const canvas = document.getElementById('background-canvas');
-      if(canvas) canvas.style.display = 'none';
-    }
-  };
-  script.onerror = () => {
-    console.error("Failed to load three.js. 3D background disabled.");
-    const canvas = document.getElementById('background-canvas');
-    if(canvas) canvas.style.display = 'none';
-  };
-  document.head.appendChild(script);
-})();
+// ==========================================
+// INITIALIZATION & SETUP
+// ==========================================
 
-// --- 3D Background Management ---
-let currentRenderer, currentScene, currentCamera, currentAnimationId;
-let mouseX = 0, mouseY = 0;
-
-// --- Dark Mode: Particle Background ---
-function init3DBackground() {
-  const canvas = document.getElementById('background-canvas');
-  if (!canvas || !window.THREE) return;
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.z = 50;
-
-  const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setClearColor(0x000000, 0);
-
-  const particleCount = 5000;
-  const particles = new THREE.BufferGeometry();
-  const positions = new Float32Array(particleCount * 3);
-  for (let i = 0; i < particleCount * 3; i++) {
-    positions[i] = (Math.random() - 0.5) * 500;
-  }
-  particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-
-  const particleMaterial = new THREE.PointsMaterial({
-    color: 0x4ade80,
-    size: 0.25,
-    transparent: true,
-    opacity: 0.7,
-    blending: THREE.AdditiveBlending
-  });
-  const particleSystem = new THREE.Points(particles, particleMaterial);
-  scene.add(particleSystem);
-
-  function animate() {
-    currentAnimationId = requestAnimationFrame(animate);
-    particleSystem.rotation.y += 0.0002;
-    camera.position.x += (mouseX - camera.position.x) * 0.02;
-    camera.position.y += (-mouseY - camera.position.y) * 0.02;
-    camera.lookAt(scene.position);
-    renderer.render(scene, camera);
-  }
-  animate();
-  return { renderer, scene, camera };
-}
-
-// --- Light Mode: Waving Mesh Background ---
-function initLightModeBackground() {
-  const canvas = document.getElementById('background-canvas');
-  if (!canvas || !window.THREE) return;
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 1, 1000);
-  camera.position.set(0, 0, 120);
-
-  const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setClearColor(0x000000, 0);
-
-  const planeGeometry = new THREE.PlaneGeometry(500, 500, 50, 50);
-  const planeMaterial = new THREE.MeshBasicMaterial({
-    color: 0x22c55e,
-    wireframe: true,
-    transparent: true,
-    opacity: 0.15
-  });
-
-  const plane = new THREE.Mesh(planeGeometry, planeMaterial);
-  scene.add(plane);
-
-  const clock = new THREE.Clock();
-
-  function animate() {
-    currentAnimationId = requestAnimationFrame(animate);
-    const t = clock.getElapsedTime();
-    const positions = plane.geometry.attributes.position;
-
-    for (let i = 0; i < positions.count; i++) {
-      const x = positions.getX(i);
-      const y = positions.getY(i);
-      const z = Math.sin(x * 0.02 + t) * 5 + Math.sin(y * 0.03 + t) * 5;
-      positions.setZ(i, z);
-    }
-    positions.needsUpdate = true;
-
-    camera.position.x += (mouseX * 0.5 - camera.position.x) * 0.02;
-    camera.position.y += (-mouseY * 0.5 - camera.position.y) * 0.02;
-    camera.lookAt(scene.position);
-
-    renderer.render(scene, camera);
-  }
-  animate();
-  return { renderer, scene, camera };
-}
-
-// --- Scene Cleanup and Switching Logic ---
-function cleanupScene() {
-  if (currentAnimationId) cancelAnimationFrame(currentAnimationId);
-  if (currentScene) {
-    currentScene.traverse(object => {
-      if (object.isMesh || object.isPoints) {
-        if (object.geometry) object.geometry.dispose();
-        if (object.material) {
-          if (Array.isArray(object.material)) {
-            object.material.forEach(material => material.dispose());
-          } else {
-            object.material.dispose();
-          }
-        }
-      }
-    });
-  }
-  if (currentRenderer) currentRenderer.dispose();
-}
-
-function switch3DBackground(theme) {
-  cleanupScene();
-  let sceneInfo;
-  if (theme === 'dark') {
-    sceneInfo = init3DBackground();
-  } else {
-    sceneInfo = initLightModeBackground();
-  }
-  if (sceneInfo) {
-    currentRenderer = sceneInfo.renderer;
-    currentScene = sceneInfo.scene;
-    currentCamera = sceneInfo.camera;
-  }
-}
-
-// Theme toggle
-function setupThemeToggle(buttonId, iconSelector) {
-  const themeToggleBtn = document.getElementById(buttonId);
-  if (!themeToggleBtn) return;
-  const body = document.body;
-
-  themeToggleBtn.addEventListener('click', () => {
-    const isDark = body.getAttribute('data-theme') === 'dark';
-    const newTheme = isDark ? 'light' : 'dark';
-    body.setAttribute('data-theme', newTheme);
-    switch3DBackground(newTheme);
-    document.querySelectorAll('#theme-toggle i, #theme-toggle-mobile i').forEach(icon => {
-      icon.className = newTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
-    });
-  });
-}
-setupThemeToggle('theme-toggle', 'i');
-setupThemeToggle('theme-toggle-mobile', 'i');
-
-// --- Initial Setup and Event Listeners ---
 document.addEventListener('DOMContentLoaded', () => {
-  const onWindowResize = () => {
-    if (!currentCamera || !currentRenderer) return;
-    currentCamera.aspect = window.innerWidth / window.innerHeight;
-    currentCamera.updateProjectionMatrix();
-    currentRenderer.setSize(window.innerWidth, window.innerHeight);
+  initializeAnimations();
+  initializeNavigation();
+  initializeThemeToggle();
+  initializeTypingEffect();
+  initializeContactForm();
+  initializeSmoothScroll();
+  initializeScrollAnimations();
+});
+
+// ==========================================
+// ANIMATIONS ON SCROLL
+// ==========================================
+
+function initializeScrollAnimations() {
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
   };
 
-  initLogoLoop();
-  switch3DBackground(document.body.getAttribute('data-theme') || 'dark');
-  onWindowResize(); // Initial resize to set canvas correctly
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('aos-animate');
+      }
+    });
+  }, observerOptions);
 
-  document.addEventListener('mousemove', (event) => {
-    mouseX = (event.clientX - window.innerWidth / 2) / 100;
-    mouseY = (event.clientY - window.innerHeight / 2) / 100;
+  // Observe all elements with data-aos attribute
+  document.querySelectorAll('[data-aos]').forEach(el => {
+    observer.observe(el);
+  });
+}
+
+// ==========================================
+// NAVIGATION
+// ==========================================
+
+function initializeNavigation() {
+  const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+  const mobileMenu = document.querySelector('.mobile-menu');
+  const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  // Mobile menu toggle
+  if (mobileMenuToggle) {
+    mobileMenuToggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('active');
+      
+      // Animate hamburger icon
+      const spans = mobileMenuToggle.querySelectorAll('span');
+      if (mobileMenu.classList.contains('active')) {
+        spans[0].style.transform = 'rotate(45deg) translateY(10px)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'rotate(-45deg) translateY(-10px)';
+      } else {
+        spans[0].style.transform = 'none';
+        spans[1].style.opacity = '1';
+        spans[2].style.transform = 'none';
+      }
+    });
+  }
+
+  // Close mobile menu when clicking a link
+  mobileNavLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.remove('active');
+      const spans = mobileMenuToggle.querySelectorAll('span');
+      spans[0].style.transform = 'none';
+      spans[1].style.opacity = '1';
+      spans[2].style.transform = 'none';
+    });
   });
 
-  window.addEventListener('resize', onWindowResize);
-});
+  // Active nav link on scroll
+  window.addEventListener('scroll', () => {
+    let current = '';
+    const sections = document.querySelectorAll('section[id]');
+    
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.clientHeight;
+      if (window.pageYOffset >= sectionTop - 200) {
+        current = section.getAttribute('id');
+      }
+    });
 
-// Mobile navigation toggle
-const navToggle = document.querySelector('.nav-toggle');
-const navLinks = document.querySelector('.nav-links');
-const navToggleIcon = navToggle.querySelector('i');
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === `#${current}`) {
+        link.classList.add('active');
+      }
+    });
+  });
 
-navToggle.addEventListener('click', () => {
-  const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
-  navToggle.setAttribute('aria-expanded', !isExpanded);
-  navLinks.classList.toggle('nav-open');
-  navToggleIcon.className = !isExpanded ? 'fas fa-times' : 'fas fa-bars';
-});
-
-// Close menu when a link is clicked
-navLinks.addEventListener('click', (e) => {
-  if (e.target.tagName === 'A') {
-    navToggle.click();
-  }
-});
-
-// Rotating roles text effect
-const roles = [
-  "Software Developer", // 1st
-  "Web Developer",      // 2nd
-  "Software Tester",    // 3rd
-  "Programmer",         // 4th
-  "Software Engineer"   // 5th
-];
-const rotatingRole = document.querySelector('.rotating-role');
-let roleIndex = 0;
-let charIndex = 0;
-let deleting = false;
-const typingSpeed = 120;
-const deletingSpeed = 60;
-const pauseDelay = 1800;
-
-function typeRotate() {
-  const currentRole = roles[roleIndex];
-  if (!deleting) {
-    rotatingRole.textContent = currentRole.substring(0, charIndex + 1);
-    charIndex++;
-    if (charIndex === currentRole.length) {
-      deleting = true;
-      setTimeout(typeRotate, pauseDelay);
+  // Shrink nav on scroll
+  const nav = document.querySelector('.nav-dock');
+  let lastScroll = 0;
+  
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+    
+    if (currentScroll > 100) {
+      nav.style.top = '10px';
+      nav.querySelector('.nav-content').style.padding = '8px 20px';
     } else {
-      setTimeout(typeRotate, typingSpeed);
+      nav.style.top = '20px';
+      nav.querySelector('.nav-content').style.padding = '12px 24px';
     }
-  } else {
-    rotatingRole.textContent = currentRole.substring(0, charIndex - 1);
-    charIndex--;
-    if (charIndex === 0) {
-      deleting = false;
-      roleIndex = (roleIndex + 1) % roles.length;
-      setTimeout(typeRotate, typingSpeed);
-    } else {
-      setTimeout(typeRotate, deletingSpeed);
-    }
-  }
+    
+    lastScroll = currentScroll;
+  });
 }
 
-typeRotate();
+// ==========================================
+// THEME TOGGLE
+// ==========================================
 
-// Smooth scroll for navigation
-function smoothScroll(e) {
-  e.preventDefault();
-  const targetId = e.currentTarget.getAttribute('href');
-  const targetElement = document.querySelector(targetId);
-  if (targetElement) {
-    targetElement.scrollIntoView({ behavior: 'smooth' });
-  }
-}
-document.querySelectorAll('.nav-links a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', smoothScroll);
-});
-document.querySelectorAll('.cta-buttons a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', smoothScroll);
-});
+function initializeThemeToggle() {
+  const themeToggle = document.querySelector('.theme-toggle');
+  const body = document.body;
+  
+  // Check for saved theme preference or default to 'dark'
+  const currentTheme = localStorage.getItem('theme') || 'dark';
+  body.setAttribute('data-theme', currentTheme);
 
-// Contact Form Submission
-const form = document.getElementById('contact-form');
-const result = document.getElementById('form-result');
-
-form.addEventListener('submit', function(e) {
-  e.preventDefault();
-  const formData = new FormData(form);
-  const object = Object.fromEntries(formData);
-  const json = JSON.stringify(object);
-  result.innerHTML = "Sending..."
-
-  fetch('https://api.web3forms.com/submit', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    },
-    body: json
-  })
-    .then(async (response) => {
-      let json = await response.json();
-      result.innerHTML = json.success ? "Message sent successfully!" : "Something went wrong. Please try again.";
-    })
-    .catch(error => result.innerHTML = "Something went wrong. Please try again.")
-    .then(() => form.reset());
-});
-
-// Logo Loop Implementation
-const logoTrack = document.getElementById('logoTrack');
-const logos = [
-  { name: 'Python', icon: 'fab fa-python', color: '#3776AB' },
-  { name: 'C', svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="70" font-size="80" font-weight="bold" text-anchor="middle" fill="currentColor">C</text></svg>', color: '#A8B9CC' },
-  { name: 'C++', svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="70" font-size="70" font-weight="bold" text-anchor="middle" fill="currentColor">C++</text></svg>', color: '#00599C' },
-  { name: 'JavaScript', icon: 'fab fa-js-square', color: '#F7DF1E' },
-  { name: 'Kotlin', svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M 10 10 L 50 50 L 10 90 Z" fill="currentColor"/><path d="M 50 10 L 90 50 L 50 90 Z" fill="currentColor"/></svg>', color: '#7F52FF' },
-  { name: 'SQL', svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="70" font-size="60" font-weight="bold" text-anchor="middle" fill="currentColor">SQL</text></svg>', color: '#CC2927' },
-  { name: 'Git', icon: 'fab fa-git-alt', color: '#F1502F' },
-  { name: 'GitHub', icon: 'fab fa-github', color: '#181717' },
-  { name: 'MongoDB', icon: 'fas fa-leaf', color: '#13AA52' },
-  { name: 'Java', icon: 'fab fa-java', color: '#007396' },
-  { name: 'Node.js', icon: 'fab fa-node-js', color: '#339933' },
-  { name: 'Express.js', svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50" y="70" font-size="80" font-weight="bold" text-anchor="middle" fill="currentColor">Ex</text></svg>', color: '#000000' },
-];
-
-function initLogoLoop() {
-  if (!logoTrack) return;
-
-  // Increased to 6 cycles for better mobile coverage
-  for (let cycle = 0; cycle < 6; cycle++) {
-    logos.forEach(logo => {
-      const logoItem = document.createElement('div');
-      logoItem.className = 'logo-item';
-      if (logo.name === 'GitHub' || logo.name === 'Express.js') {
-        logoItem.classList.add('logo-inverted-bg');
-      }
-      let logoContent = '';
-
-      if (logo.icon) {
-        logoContent = `<i class="${logo.icon}" style="font-size: 3rem; color: ${logo.color}; margin-bottom: 8px;"></i>`;
-      } else if (logo.svg) {
-        logoContent = `<div style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; color: ${logo.color}; margin-bottom: 8px;">${logo.svg}</div>`;
-      }
-
-      logoItem.innerHTML = `
-        <div style="text-align: center; flex-direction: column; display: flex; align-items: center;">
-          ${logoContent}
-          <span class="logo-label">${logo.name}</span>
-        </div>
-      `;
-      logoTrack.appendChild(logoItem);
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = body.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      body.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      
+      // Add rotation animation
+      themeToggle.style.transform = 'rotate(360deg)';
+      setTimeout(() => {
+        themeToggle.style.transform = 'rotate(0deg)';
+      }, 300);
     });
   }
 }
+
+// ==========================================
+// TYPING EFFECT
+// ==========================================
+
+function initializeTypingEffect() {
+  const roles = [
+    "Software Developer",
+    "Full Stack Engineer",
+    "Software Tester",
+    "Web Developer",
+    "Problem Solver"
+  ];
+  
+  const typingText = document.querySelector('.typing-text');
+  if (!typingText) return;
+  
+  let roleIndex = 0;
+  let charIndex = 0;
+  let isDeleting = false;
+  let typingSpeed = 100;
+  
+  function type() {
+    const currentRole = roles[roleIndex];
+    
+    if (isDeleting) {
+      typingText.textContent = currentRole.substring(0, charIndex - 1);
+      charIndex--;
+      typingSpeed = 50;
+    } else {
+      typingText.textContent = currentRole.substring(0, charIndex + 1);
+      charIndex++;
+      typingSpeed = 100;
+    }
+    
+    if (!isDeleting && charIndex === currentRole.length) {
+      // Pause at end
+      typingSpeed = 2000;
+      isDeleting = true;
+    } else if (isDeleting && charIndex === 0) {
+      isDeleting = false;
+      roleIndex = (roleIndex + 1) % roles.length;
+      typingSpeed = 500;
+    }
+    
+    setTimeout(type, typingSpeed);
+  }
+  
+  // Start typing effect
+  type();
+}
+
+// ==========================================
+// SMOOTH SCROLL
+// ==========================================
+
+function initializeSmoothScroll() {
+  const links = document.querySelectorAll('a[href^="#"]');
+  
+  links.forEach(link => {
+    link.addEventListener('click', (e) => {
+      const targetId = link.getAttribute('href');
+      
+      if (targetId === '#' || !targetId) return;
+      
+      const targetElement = document.querySelector(targetId);
+      
+      if (targetElement) {
+        e.preventDefault();
+        
+        const headerOffset = 100;
+        const elementPosition = targetElement.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+}
+
+// ==========================================
+// CONTACT FORM
+// ==========================================
+
+function initializeContactForm() {
+  const form = document.getElementById('contact-form');
+  const result = document.getElementById('form-result');
+  
+  if (!form) return;
+  
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    // Show loading state
+    result.innerHTML = 'Sending message...';
+    result.style.color = 'var(--color-accent-primary)';
+    result.style.background = 'var(--color-bg-tertiary)';
+    result.style.border = '2px solid var(--color-border)';
+    
+    const formData = new FormData(form);
+    const object = Object.fromEntries(formData);
+    const json = JSON.stringify(object);
+    
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: json
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        result.innerHTML = '✓ Message sent successfully! I\'ll get back to you soon.';
+        result.style.color = 'var(--color-accent-primary)';
+        result.style.background = 'rgba(0, 255, 136, 0.1)';
+        result.style.border = '2px solid var(--color-accent-primary)';
+        form.reset();
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (error) {
+      result.innerHTML = '✗ Something went wrong. Please try again or email me directly.';
+      result.style.color = '#ff3366';
+      result.style.background = 'rgba(255, 51, 102, 0.1)';
+      result.style.border = '2px solid #ff3366';
+    }
+    
+    // Clear message after 5 seconds
+    setTimeout(() => {
+      result.innerHTML = '';
+      result.style.background = 'transparent';
+      result.style.border = 'none';
+    }, 5000);
+  });
+}
+
+// ==========================================
+// GENERAL ANIMATIONS
+// ==========================================
+
+function initializeAnimations() {
+  // Parallax effect for background orbs
+  document.addEventListener('mousemove', (e) => {
+    const orbs = document.querySelectorAll('.gradient-orb');
+    const x = e.clientX / window.innerWidth;
+    const y = e.clientY / window.innerHeight;
+    
+    orbs.forEach((orb, index) => {
+      const speed = (index + 1) * 20;
+      const xMove = (x - 0.5) * speed;
+      const yMove = (y - 0.5) * speed;
+      
+      orb.style.transform = `translate(${xMove}px, ${yMove}px)`;
+    });
+  });
+  
+  // Add hover effect to skill tags
+  const skillTags = document.querySelectorAll('.skill-tag');
+  skillTags.forEach(tag => {
+    tag.addEventListener('mouseenter', () => {
+      tag.style.transform = 'translateY(-2px) rotate(2deg)';
+    });
+    
+    tag.addEventListener('mouseleave', () => {
+      tag.style.transform = 'translateY(0) rotate(0deg)';
+    });
+  });
+  
+  // Pause tech showcase on hover
+  const techShowcase = document.querySelector('.showcase-track');
+  if (techShowcase) {
+    techShowcase.addEventListener('mouseenter', () => {
+      techShowcase.style.animationPlayState = 'paused';
+    });
+    
+    techShowcase.addEventListener('mouseleave', () => {
+      techShowcase.style.animationPlayState = 'running';
+    });
+  }
+  
+  // Add magnetic effect to buttons
+  const buttons = document.querySelectorAll('.btn');
+  buttons.forEach(button => {
+    button.addEventListener('mousemove', (e) => {
+      const rect = button.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      
+      button.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
+    });
+    
+    button.addEventListener('mouseleave', () => {
+      button.style.transform = 'translate(0, 0)';
+    });
+  });
+  
+  // Randomize floating animation delays
+  const floatingElements = document.querySelectorAll('.stat-card');
+  floatingElements.forEach((element, index) => {
+    element.style.animationDelay = `${index * 0.2}s`;
+  });
+}
+
+// ==========================================
+// PERFORMANCE OPTIMIZATIONS
+// ==========================================
+
+// Debounce function for scroll events
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
+// Optimize scroll events
+const optimizedScroll = debounce(() => {
+  // Any scroll-based logic here
+}, 10);
+
+window.addEventListener('scroll', optimizedScroll);
+
+// ==========================================
+// EASTER EGG - KONAMI CODE
+// ==========================================
+
+let konamiCode = [];
+const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+
+document.addEventListener('keydown', (e) => {
+  konamiCode.push(e.key);
+  konamiCode = konamiCode.slice(-konamiSequence.length);
+  
+  if (konamiCode.join('') === konamiSequence.join('')) {
+    // Easter egg activated!
+    document.body.style.animation = 'rainbow 2s linear infinite';
+    
+    setTimeout(() => {
+      document.body.style.animation = '';
+    }, 5000);
+  }
+});
+
+// Rainbow animation for easter egg
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes rainbow {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+  }
+`;
+document.head.appendChild(style);
+
+// ==========================================
+// CONSOLE MESSAGE
+// ==========================================
+
+console.log('%c👋 Hello, curious developer!', 'color: #00ff88; font-size: 24px; font-weight: bold;');
+console.log('%cLike what you see? Let\'s connect!', 'color: #00ccff; font-size: 16px;');
+console.log('%cEmail: adityarya207@gmail.com', 'color: #b4b4b4; font-size: 14px;');
+console.log('%cTry the Konami Code for a surprise 😉', 'color: #ff00ff; font-size: 12px; font-style: italic;');

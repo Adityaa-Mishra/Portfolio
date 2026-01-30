@@ -3,182 +3,583 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Aditya Mishra - Portfolio</title>
+  <title>Aditya Mishra - Creative Developer</title>
 
-  <!-- Fonts and Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Unique Font Pairing - Bold & Distinctive -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body data-theme="dark">
-  <canvas id="background-canvas"></canvas>
+  <!-- Animated Background Elements -->
+  <div class="background-wrapper">
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="gradient-orb orb-3"></div>
+    <div class="grid-overlay"></div>
+    <div class="noise-overlay"></div>
+  </div>
 
-  <header>
-    <nav class="container" aria-label="Primary Navigation">
-      <div class="logo" aria-label="Website Logo">Aditya Mishra</div>
-      <button class="nav-toggle" aria-label="toggle navigation menu" aria-expanded="false">
-        <i class="fas fa-bars"></i>
+  <!-- Floating Navigation Dock -->
+  <nav class="nav-dock" aria-label="Primary Navigation">
+    <div class="nav-content">
+      <div class="logo-mark">
+        <span class="logo-initial">A</span>
+        <span class="logo-text">ditya</span>
+      </div>
+      
+      <div class="nav-links-wrapper">
+        <a href="#hero" class="nav-link active" data-text="Home">
+          <span>Home</span>
+        </a>
+        <a href="#about" class="nav-link" data-text="About">
+          <span>About</span>
+        </a>
+        <a href="#skills" class="nav-link" data-text="Skills">
+          <span>Skills</span>
+        </a>
+        <a href="#projects" class="nav-link" data-text="Work">
+          <span>Work</span>
+        </a>
+        <a href="#contact" class="nav-link" data-text="Contact">
+          <span>Contact</span>
+        </a>
+      </div>
+
+      <button class="theme-toggle" aria-label="Toggle theme">
+        <i class="fas fa-moon"></i>
+        <i class="fas fa-sun"></i>
       </button>
-      <ul class="nav-links">
-        <li><a href="#hero">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#education">Education</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li class="theme-toggle-li">
-          <button id="theme-toggle-mobile" aria-label="Toggle light and dark mode"><i class="fas fa-moon"></i></button>
-        </li>
-      </ul>
-      <button id="theme-toggle" aria-label="Toggle light and dark mode"><i class="fas fa-moon"></i></button>
-    </nav>
-  </header>
 
-  <section id="hero" class="hero" role="banner">
-    <div class="container">
-      <img src="photo.jpg" alt="Aditya Mishra" class="profile-img" />
-      <h1 class="split-text-name">Aditya Mishra</h1>
-      <p class="rotating-role" aria-live="polite" aria-atomic="true"></p>
-      <p class="bio">A passionate developer who loves building things for the web and is always excited to learn something new.</p>
-      <div class="cta-buttons">
-        <a href="#projects" class="btn" role="button" tabindex="0">View Projects</a>
-        <a href="Aditya Resume .pdf" download="Aditya Mishra Resume.pdf" class="btn btn-outline" role="button" tabindex="0">Download Resume</a>
-        <a href="#contact" class="btn" role="button" tabindex="0">Contact Me</a>
+      <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu">
+    <div class="mobile-menu-content">
+      <a href="#hero" class="mobile-nav-link">Home</a>
+      <a href="#about" class="mobile-nav-link">About</a>
+      <a href="#skills" class="mobile-nav-link">Skills</a>
+      <a href="#projects" class="mobile-nav-link">Work</a>
+      <a href="#contact" class="mobile-nav-link">Contact</a>
+    </div>
+  </div>
+
+  <!-- Hero Section - Brutalist Layout -->
+  <section id="hero" class="hero-section">
+    <div class="hero-container">
+      <div class="hero-badge" data-aos="fade-down">
+        <span class="badge-icon">✦</span>
+        <span>Available for opportunities</span>
       </div>
-      <div class="social-icons" role="list">
-        <a href="https://github.com/Adityaa-Mishra" target="_blank" rel="noopener" role="listitem" aria-label="GitHub"><i class="fab fa-github"></i></a>
-        <a href="https://www.linkedin.com/in/aditya-mishra-64a687394" target="_blank" rel="noopener" role="listitem" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-        <a href="https://www.instagram.com/adityya_aryan/" target="_blank" rel="noopener" role="listitem" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-        <a href="mailto:adityarya207@gmail.com" role="listitem" aria-label="Email"><i class="fas fa-envelope"></i></a>
+
+      <div class="hero-content">
+        <div class="hero-left">
+          <h1 class="hero-title" data-aos="fade-up">
+            <span class="title-line">ADITYA</span>
+            <span class="title-line gradient-text">MISHRA</span>
+          </h1>
+          
+          <div class="hero-subtitle" data-aos="fade-up" data-aos-delay="100">
+            <div class="typing-container">
+              <span class="typing-text"></span>
+              <span class="cursor">|</span>
+            </div>
+          </div>
+
+          <p class="hero-description" data-aos="fade-up" data-aos-delay="200">
+            Crafting digital experiences that merge aesthetics with functionality. 
+            Specializing in full-stack development, testing, and creative problem-solving.
+          </p>
+
+          <div class="hero-cta" data-aos="fade-up" data-aos-delay="300">
+            <a href="#projects" class="btn btn-primary">
+              <span>View Work</span>
+              <i class="fas fa-arrow-right"></i>
+            </a>
+            <a href="./Aditya Mishra Resume.pdf" download class="btn btn-secondary">
+              <span>Download Resume</span>
+              <i class="fas fa-download"></i>
+            </a>
+          </div>
+
+          <div class="hero-social" data-aos="fade-up" data-aos-delay="400">
+            <a href="https://github.com/Adityaa-Mishra" target="_blank" rel="noopener" class="social-link">
+              <i class="fab fa-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/aditya-mishra-64a687394" target="_blank" rel="noopener" class="social-link">
+              <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://www.instagram.com/adityya_aryan/" target="_blank" rel="noopener" class="social-link">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="mailto:adityarya207@gmail.com" class="social-link">
+              <i class="fas fa-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-right" data-aos="zoom-in" data-aos-delay="200">
+          <div class="profile-container">
+            <div class="profile-decoration"></div>
+            <img src="photo.jpg" alt="Aditya Mishra" class="profile-image" />
+            <div class="profile-glow"></div>
+          </div>
+          
+          <div class="floating-stats">
+            <div class="stat-card" data-aos="fade-left" data-aos-delay="500">
+              <div class="stat-number">3+</div>
+              <div class="stat-label">Years Coding</div>
+            </div>
+            <div class="stat-card" data-aos="fade-left" data-aos-delay="600">
+              <div class="stat-number">15+</div>
+              <div class="stat-label">Projects</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="scroll-indicator" data-aos="fade-up" data-aos-delay="800">
+        <span>Scroll to explore</span>
+        <div class="scroll-arrow"></div>
       </div>
     </div>
   </section>
 
-  <section id="about" class="about" tabindex="-1">
+  <!-- About Section - Magazine Layout -->
+  <section id="about" class="about-section">
     <div class="container">
-      <h2 class="section-title">About Me</h2>
-      <div class="about-content" role="region" aria-label="About Me">
-        <p>I'm a software developer and tester who loves building efficient and user-friendly apps. My journey in tech is all about curiosity and a commitment to continuous learning. I get a real kick out of solving tricky problems and creating solutions that have a real impact.</p>
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-number">01</span>
+        <h2 class="section-title">About Me</h2>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-content" data-aos="fade-right">
+          <div class="about-text-block">
+            <p class="lead-text">
+              I'm a software developer and tester who thrives on transforming complex problems 
+              into elegant solutions.
+            </p>
+            <p>
+              My journey in tech is fueled by relentless curiosity and a commitment to continuous 
+              growth. I believe that the best code is not just functional—it's crafted with intention, 
+              designed with users in mind, and built to last.
+            </p>
+            <p>
+              Whether I'm architecting full-stack applications, optimizing performance, or exploring 
+              new technologies, I approach every challenge with enthusiasm and precision.
+            </p>
+          </div>
+
+          <div class="about-highlights">
+            <div class="highlight-item">
+              <i class="fas fa-code"></i>
+              <span>Clean Code Advocate</span>
+            </div>
+            <div class="highlight-item">
+              <i class="fas fa-lightbulb"></i>
+              <span>Problem Solver</span>
+            </div>
+            <div class="highlight-item">
+              <i class="fas fa-rocket"></i>
+              <span>Fast Learner</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-visual" data-aos="fade-left">
+          <div class="visual-card">
+            <div class="card-header">
+              <span class="card-icon">💼</span>
+              <span>Currently</span>
+            </div>
+            <div class="card-body">
+              <h3>Building & Learning</h3>
+              <p>Focused on full-stack development and exploring cutting-edge technologies</p>
+            </div>
+          </div>
+
+          <div class="visual-card">
+            <div class="card-header">
+              <span class="card-icon">🎯</span>
+              <span>Mission</span>
+            </div>
+            <div class="card-body">
+              <h3>Impact Through Code</h3>
+              <p>Creating solutions that make a meaningful difference in people's lives</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <section id="skills" class="skills" tabindex="-1">
+  <!-- Skills Section - Bento Grid -->
+  <section id="skills" class="skills-section">
     <div class="container">
-      <h2 class="section-title">Skills</h2>
-      <div class="skills-grid">
-        <div class="skill-category" aria-label="Programming Languages">
-          <h3>Programming Languages</h3>
-          <ul>
-            <li>Python</li>
-            <li>C</li>
-            <li>C++</li>
-            <li>Java</li>
-            <li>Kotlin</li>
-            <li>JavaScript</li>
-          </ul>
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-number">02</span>
+        <h2 class="section-title">Skills & Expertise</h2>
+      </div>
+
+      <div class="bento-grid">
+        <!-- Large Card - Languages -->
+        <div class="bento-card large" data-aos="fade-up">
+          <div class="bento-header">
+            <i class="fas fa-code"></i>
+            <h3>Languages</h3>
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">C++</span>
+            <span class="skill-tag">Java</span>
+            <span class="skill-tag">Kotlin</span>
+            <span class="skill-tag">C</span>
+          </div>
         </div>
-        <div class="skill-category" aria-label="Frameworks and Tools">
-          <h3>Frameworks & Tools</h3>
-          <ul>
-            <li>Git</li>
-            <li>GitHub</li>
-            <li>MERN Stack</li>
-            <li>VS Code</li>
-            <li>Android Studio</li>
-          </ul>
+
+        <!-- Medium Card - Frameworks -->
+        <div class="bento-card medium" data-aos="fade-up" data-aos-delay="100">
+          <div class="bento-header">
+            <i class="fas fa-layer-group"></i>
+            <h3>Frameworks</h3>
+          </div>
+          <div class="skill-list">
+            <div class="skill-item">
+              <span class="skill-bullet"></span>
+              <span>MERN Stack</span>
+            </div>
+            <div class="skill-item">
+              <span class="skill-bullet"></span>
+              <span>Flask</span>
+            </div>
+            <div class="skill-item">
+              <span class="skill-bullet"></span>
+              <span>Android Studio</span>
+            </div>
+          </div>
         </div>
-        <div class="skill-category" aria-label="Databases">
-          <h3>Databases</h3>
-          <ul>
-            <li>SQL</li>
-            <li>MongoDB</li>
-          </ul>
+
+        <!-- Small Card - Tools -->
+        <div class="bento-card small" data-aos="fade-up" data-aos-delay="200">
+          <div class="bento-header">
+            <i class="fas fa-tools"></i>
+            <h3>Tools</h3>
+          </div>
+          <div class="skill-list compact">
+            <span>Git</span>
+            <span>GitHub</span>
+            <span>VS Code</span>
+          </div>
         </div>
-        <div class="skill-category" aria-label="Concepts">
-          <h3>Concepts</h3>
-          <ul>
-            <li>OOPS</li>
-            <li>Functional Programming</li>
-            <li>DSA</li>
-          </ul>
+
+        <!-- Small Card - Databases -->
+        <div class="bento-card small" data-aos="fade-up" data-aos-delay="250">
+          <div class="bento-header">
+            <i class="fas fa-database"></i>
+            <h3>Database</h3>
+          </div>
+          <div class="skill-list compact">
+            <span>MongoDB</span>
+            <span>SQL</span>
+          </div>
+        </div>
+
+        <!-- Wide Card - Concepts -->
+        <div class="bento-card wide" data-aos="fade-up" data-aos-delay="300">
+          <div class="bento-header">
+            <i class="fas fa-brain"></i>
+            <h3>Core Concepts</h3>
+          </div>
+          <div class="concept-grid">
+            <div class="concept-item">
+              <span class="concept-icon">🎯</span>
+              <span>OOP</span>
+            </div>
+            <div class="concept-item">
+              <span class="concept-icon">⚡</span>
+              <span>Functional Programming</span>
+            </div>
+            <div class="concept-item">
+              <span class="concept-icon">🌳</span>
+              <span>Data Structures</span>
+            </div>
+            <div class="concept-item">
+              <span class="concept-icon">🔍</span>
+              <span>Algorithms</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Logo Loop Section -->
-      <div class="logo-loop-container" role="region" aria-label="Technology Skills Logos">
-        <div class="logo-track" id="logoTrack">
-          <!-- Logos will be dynamically inserted here -->
+      <!-- Animated Tech Stack Showcase -->
+      <div class="tech-showcase" data-aos="fade-up" data-aos-delay="400">
+        <div class="showcase-track">
+          <div class="tech-item">
+            <i class="fab fa-python"></i>
+            <span>Python</span>
+          </div>
+          <div class="tech-item">
+            <i class="fab fa-js"></i>
+            <span>JavaScript</span>
+          </div>
+          <div class="tech-item">
+            <i class="fab fa-react"></i>
+            <span>React</span>
+          </div>
+          <div class="tech-item">
+            <i class="fab fa-node"></i>
+            <span>Node.js</span>
+          </div>
+          <div class="tech-item">
+            <i class="fab fa-git-alt"></i>
+            <span>Git</span>
+          </div>
+          <div class="tech-item">
+            <i class="fas fa-database"></i>
+            <span>MongoDB</span>
+          </div>
+          <div class="tech-item">
+            <i class="fab fa-java"></i>
+            <span>Java</span>
+          </div>
+          <div class="tech-item">
+            <i class="fab fa-android"></i>
+            <span>Android</span>
+          </div>
+          <!-- Duplicate for seamless loop -->
+          <div class="tech-item">
+            <i class="fab fa-python"></i>
+            <span>Python</span>
+          </div>
+          <div class="tech-item">
+            <i class="fab fa-js"></i>
+            <span>JavaScript</span>
+          </div>
+          <div class="tech-item">
+            <i class="fab fa-react"></i>
+            <span>React</span>
+          </div>
+          <div class="tech-item">
+            <i class="fab fa-node"></i>
+            <span>Node.js</span>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="projects" class="projects" tabindex="-1">
+  <!-- Projects Section - Card Showcase -->
+  <section id="projects" class="projects-section">
     <div class="container">
-      <h2 class="section-title">Projects</h2>
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-number">03</span>
+        <h2 class="section-title">Featured Work</h2>
+      </div>
+
       <div class="projects-grid">
-        <article class="project-card" aria-label="QR Code Scanner project">
-          <h3>QR Code Scanner</h3>
-          <p>I built this web app to quickly scan QR codes using a device's camera. It was a fun challenge to work with browser media APIs.</p>
-          <a href="https://splendid-platypus-fb079b.netlify.app/" target="_blank" rel="noopener">View Project</a>
+        <article class="project-card featured" data-aos="zoom-in">
+          <div class="project-image">
+            <div class="project-overlay">
+              <a href="https://myhome-hw4l.onrender.com/" target="_blank" rel="noopener" class="project-link">
+                <i class="fas fa-external-link-alt"></i>
+              </a>
+            </div>
+          </div>
+          <div class="project-content">
+            <div class="project-tag">Full Stack</div>
+            <h3 class="project-title">MYHOME MISTRI</h3>
+            <p class="project-description">
+              A comprehensive platform connecting local service providers with customers. 
+              Built with MERN stack, featuring real-time updates and secure authentication.
+            </p>
+            <div class="project-tech">
+              <span>MongoDB</span>
+              <span>Express</span>
+              <span>React</span>
+              <span>Node.js</span>
+            </div>
+          </div>
         </article>
-        <article class="project-card" aria-label="Weather Web App project">
-          <h3>Weather Web App</h3>
-          <p>This app fetches and displays weather data from anywhere in the world. A great project for practicing how to work with third-party APIs.</p>
-          <a href="https://quiet-yeot-a90612.netlify.app/" target="_blank" rel="noopener">View Project</a>
+
+        <article class="project-card" data-aos="fade-up">
+          <div class="project-image">
+            <div class="project-overlay">
+              <a href="https://splendid-platypus-fb079b.netlify.app/" target="_blank" rel="noopener" class="project-link">
+                <i class="fas fa-external-link-alt"></i>
+              </a>
+            </div>
+          </div>
+          <div class="project-content">
+            <div class="project-tag">Web App</div>
+            <h3 class="project-title">QR Code Scanner</h3>
+            <p class="project-description">
+              Fast and efficient QR code scanner leveraging device camera APIs. 
+              Clean interface with instant results.
+            </p>
+            <div class="project-tech">
+              <span>JavaScript</span>
+              <span>WebRTC</span>
+              <span>HTML5</span>
+            </div>
+          </div>
         </article>
-        <article class="project-card" aria-label="File Converter Web App project">
-          <h3>File Converter Web App</h3>
-          <p>A handy tool for converting files. I used Flask for the backend to handle the file processing. (Hosted on Render, so it might take a moment to wake up!)</p>
-          <a href="https://neww-3-xv91.onrender.com/" target="_blank" rel="noopener">View Project</a>
+
+        <article class="project-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="project-image">
+            <div class="project-overlay">
+              <a href="https://neww-3-xv91.onrender.com/" target="_blank" rel="noopener" class="project-link">
+                <i class="fas fa-external-link-alt"></i>
+              </a>
+            </div>
+          </div>
+          <div class="project-content">
+            <div class="project-tag">Backend</div>
+            <h3 class="project-title">File Converter</h3>
+            <p class="project-description">
+              Universal file converter with Flask backend. Handles multiple formats 
+              with efficient processing and error handling.
+            </p>
+            <div class="project-tech">
+              <span>Python</span>
+              <span>Flask</span>
+              <span>APIs</span>
+            </div>
+          </div>
         </article>
       </div>
     </div>
   </section>
 
-  <section id="education" class="education" tabindex="-1">
+  <!-- Education Section - Timeline -->
+  <section id="education" class="education-section">
     <div class="container">
-      <h2 class="section-title">Education</h2>
-      <div class="education-list" role="list">
-        <div class="education-item" role="listitem">Senior Secondary (PCM) – NIOS, 2025</div>
-        <div class="education-item" role="listitem">Secondary Education – New Shalimar Public School, New Delhi</div>
-        <div class="education-item" role="listitem">Diploma in Computer Science – DSEU (2023–2026)</div>
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-number">04</span>
+        <h2 class="section-title">Education</h2>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item" data-aos="fade-right">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-year">2023 – 2026</div>
+            <h3>Diploma in Computer Science</h3>
+            <p>Delhi Skill and Entrepreneurship University (DSEU)</p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-aos="fade-right" data-aos-delay="100">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-year">2025</div>
+            <h3>Senior Secondary (PCM)</h3>
+            <p>National Institute of Open Schooling (NIOS)</p>
+          </div>
+        </div>
+
+        <div class="timeline-item" data-aos="fade-right" data-aos-delay="200">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-year">Secondary</div>
+            <h3>Secondary Education</h3>
+            <p>New Shalimar Public School, New Delhi</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <section id="contact" class="contact" tabindex="-1">
+  <!-- Contact Section - Modern Form -->
+  <section id="contact" class="contact-section">
     <div class="container">
-      <h2 class="section-title">Contact</h2>
-      <p class="about-content" style="margin-bottom: 40px;">Have a question or want to work together? Leave your details and I'll get back to you.</p>
-      <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
-        <!-- Web3Forms Access Key -->
-        <input type="hidden" name="access_key" value="1694d243-357c-487f-a1be-cc78859d97ae">
-        <input type="hidden" name="from_name" value="CV Contact Form">
-        <input type="hidden" name="subject" value="New Message from CV Portfolio">
-        <input type="hidden" name="email_to" value="adityarya207@gmail.com">
-        <input type="hidden" name="redirect" value="">
-        <div class="form-group">
-          <label for="name">Your Name</label>
-          <input type="text" name="name" id="name" required>
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-number">05</span>
+        <h2 class="section-title">Get In Touch</h2>
+      </div>
+
+      <div class="contact-wrapper">
+        <div class="contact-info" data-aos="fade-right">
+          <h3>Let's Work Together</h3>
+          <p>
+            Have a project in mind or want to collaborate? I'm always open to 
+            discussing new opportunities and creative ideas.
+          </p>
+
+          <div class="contact-details">
+            <div class="contact-item">
+              <i class="fas fa-envelope"></i>
+              <span>adityarya207@gmail.com</span>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Delhi, India</span>
+            </div>
+          </div>
+
+          <div class="contact-social">
+            <a href="https://github.com/Adityaa-Mishra" target="_blank" rel="noopener">
+              <i class="fab fa-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/aditya-mishra-64a687394" target="_blank" rel="noopener">
+              <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://www.instagram.com/adityya_aryan/" target="_blank" rel="noopener">
+              <i class="fab fa-instagram"></i>
+            </a>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="email">Your Email</label>
-          <input type="email" name="email" id="email" required>
-        </div>
-        <div class="form-group">
-          <label for="message">Your Message</label>
-          <textarea name="message" id="message" rows="5" required></textarea>
-        </div>
-        <button type="submit" class="btn">Send Message</button>
-      </form>
-      <div id="form-result" class="about-content"></div>
+
+        <form class="contact-form" id="contact-form" data-aos="fade-left">
+          <input type="hidden" name="access_key" value="1694d243-357c-487f-a1be-cc78859d97ae">
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Your Name</label>
+              <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Your Email</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="6" required></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary">
+            <span>Send Message</span>
+            <i class="fas fa-paper-plane"></i>
+          </button>
+
+          <div id="form-result"></div>
+        </form>
+      </div>
     </div>
   </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <p>&copy; 2026 Aditya Mishra. Designed & Developed with passion.</p>
+        <div class="footer-links">
+          <a href="#hero">Back to Top</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 
   <script src="script.js"></script>
 </body>
-
 </html>

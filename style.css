@@ -592,6 +592,8 @@ body {
   background: var(--color-accent-primary);
   color: var(--color-bg-primary);
   box-shadow: var(--shadow-hard);
+  margin-top: 20px;
+  
 }
 
 .btn-primary:hover {

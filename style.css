@@ -1831,3 +1831,44 @@ section {
     gap: 2px !important;  /* Tighter spacing */
   }
 }
+@media (max-width: 768px) {
+  .showcase-track {
+    animation-duration: 8s linear infinite;  /* 1s per item */
+    gap: 15px;
+  }
+  
+  .tech-item {
+    min-width: 80px;  /* Smaller icons */
+    padding: 12px;
+  }
+}
+/* Add to mobile media queries */
+@media (max-width: 768px) {
+  .tech-showcase {
+    padding: 24px 0;  /* Less padding */
+  }
+  
+  .showcase-track {
+    animation: scroll 8s linear infinite;
+    will-change: transform;  /* GPU acceleration */
+  }
+}
+/* =============================================
+   VERTICAL LANGUAGES + HIDE SCROLLBAR
+   ============================================ */
+@media (min-width: 992px) {
+  .bento-card.large .skill-tags {
+    flex-direction: column !important;     /* ✅ STAYS VERTICAL */
+    max-height: 280px;                     /* ✅ Scroll space */
+    overflow-y: auto;                      /* ✅ Scroll works */
+    
+    /* HIDE SCROLLBAR ONLY */
+    -ms-overflow-style: none;              /* IE/Edge */
+    scrollbar-width: none;                 /* Firefox */
+  }
+  
+  /* Chrome/Safari */
+  .bento-card.large .skill-tags::-webkit-scrollbar {
+    display: none;                         /* GONE */
+  }
+}

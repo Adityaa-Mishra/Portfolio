@@ -1818,3 +1818,14 @@ section {
     display: none !important;
   }
 }
+/* FIX: Keep logo text visible on ALL mobile devices */
+@media (max-width: 480px) {
+  .logo-text {
+    display: inline !important;  /* ✅ SHOW TEXT AGAIN */
+    font-size: 18px !important;  /* Smaller but visible */
+  }
+  
+  .logo-mark {
+    gap: 2px !important;  /* Tighter spacing */
+  }
+}

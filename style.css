@@ -1872,3 +1872,9 @@ section {
     display: none;                         /* GONE */
   }
 }
+@media (max-width: 600px) {
+#scroll{
+  display: none;
+}
+  
+}

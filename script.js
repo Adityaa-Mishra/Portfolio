@@ -5,7 +5,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   initializeAnimations();
   initializeNavigation();
-  initializeThemeToggle();
   initializeTypingEffect();
   initializeContactForm();
   initializeSmoothScroll();
@@ -41,10 +40,10 @@ function initializeScrollAnimations() {
 // ==========================================
 
 function initializeNavigation() {
-  const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-  const mobileMenu = document.querySelector('.mobile-menu');
-  const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
-  const navLinks = document.querySelectorAll('.nav-link');
+  const mobileMenuToggle = document.querySelector('.menu-toggle');
+  const mobileMenu = document.querySelector('.mobile-panel');
+  const mobileNavLinks = document.querySelectorAll('.mobile-panel__link');
+  const navLinks = document.querySelectorAll('.nav__link');
 
   // Mobile menu toggle
   if (mobileMenuToggle) {
@@ -98,7 +97,7 @@ function initializeNavigation() {
   });
 
   // Shrink nav on scroll
-  const nav = document.querySelector('.nav-dock');
+  const nav = document.querySelector('.masthead');
   let lastScroll = 0;
   
   window.addEventListener('scroll', () => {
@@ -106,43 +105,14 @@ function initializeNavigation() {
     
     if (currentScroll > 100) {
       nav.style.top = '10px';
-      nav.querySelector('.nav-content').style.padding = '8px 20px';
+      nav.querySelector('.masthead__inner').style.padding = '8px 18px';
     } else {
-      nav.style.top = '20px';
-      nav.querySelector('.nav-content').style.padding = '12px 24px';
+      nav.style.top = '18px';
+      nav.querySelector('.masthead__inner').style.padding = '12px 20px';
     }
     
     lastScroll = currentScroll;
   });
-}
-
-// ==========================================
-// THEME TOGGLE
-// ==========================================
-
-function initializeThemeToggle() {
-  const themeToggle = document.querySelector('.theme-toggle');
-  const body = document.body;
-  
-  // Check for saved theme preference or default to 'dark'
-  const currentTheme = localStorage.getItem('theme') || 'dark';
-  body.setAttribute('data-theme', currentTheme);
-
-  if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
-      const currentTheme = body.getAttribute('data-theme');
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      
-      body.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
-      
-      // Add rotation animation
-      themeToggle.style.transform = 'rotate(360deg)';
-      setTimeout(() => {
-        themeToggle.style.transform = 'rotate(0deg)';
-      }, 300);
-    });
-  }
 }
 
 // ==========================================
@@ -158,7 +128,7 @@ function initializeTypingEffect() {
     "Problem Solver"
   ];
   
-  const typingText = document.querySelector('.typing-text');
+  const typingText = document.querySelector('.typing__text');
   if (!typingText) return;
   
   let roleIndex = 0;
@@ -292,23 +262,8 @@ function initializeContactForm() {
 // ==========================================
 
 function initializeAnimations() {
-  // Parallax effect for background orbs
-  document.addEventListener('mousemove', (e) => {
-    const orbs = document.querySelectorAll('.gradient-orb');
-    const x = e.clientX / window.innerWidth;
-    const y = e.clientY / window.innerHeight;
-    
-    orbs.forEach((orb, index) => {
-      const speed = (index + 1) * 20;
-      const xMove = (x - 0.5) * speed;
-      const yMove = (y - 0.5) * speed;
-      
-      orb.style.transform = `translate(${xMove}px, ${yMove}px)`;
-    });
-  });
-  
   // Add hover effect to skill tags
-  const skillTags = document.querySelectorAll('.skill-tag');
+  const skillTags = document.querySelectorAll('.pill-set span, .compact span');
   skillTags.forEach(tag => {
     tag.addEventListener('mouseenter', () => {
       tag.style.transform = 'translateY(-2px) rotate(2deg)';
@@ -320,7 +275,7 @@ function initializeAnimations() {
   });
   
   // Pause tech showcase on hover
-  const techShowcase = document.querySelector('.showcase-track');
+  const techShowcase = document.querySelector('.marquee__track');
   if (techShowcase) {
     techShowcase.addEventListener('mouseenter', () => {
       techShowcase.style.animationPlayState = 'paused';
@@ -413,7 +368,8 @@ document.head.appendChild(style);
 // CONSOLE MESSAGE
 // ==========================================
 
-console.log('%c👋 Hello, curious developer!', 'color: #00ff88; font-size: 24px; font-weight: bold;');
-console.log('%cLike what you see? Let\'s connect!', 'color: #00ccff; font-size: 16px;');
-console.log('%cEmail: adityarya207@gmail.com', 'color: #b4b4b4; font-size: 14px;');
-console.log('%cTry the Konami Code for a surprise 😉', 'color: #ff00ff; font-size: 12px; font-style: italic;');
+console.log('%cHello, curious developer!', 'color: #ffd400; font-size: 22px; font-weight: bold;');
+console.log('%cLike what you see? Let\'s connect!', 'color: #ffea70; font-size: 16px;');
+console.log('%cEmail: adityarya207@gmail.com', 'color: #b9b9b9; font-size: 14px;');
+console.log('%cTry the Konami Code for a surprise.', 'color: #ffd400; font-size: 12px; font-style: italic;');
+

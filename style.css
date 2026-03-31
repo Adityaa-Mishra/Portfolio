@@ -458,9 +458,9 @@ body {
 }
 
 .hero__line {
-  width: 50px;
-  height: 2px;
-  background: linear-gradient(90deg, var(--accent), transparent);
+  width: 2px;
+  height: 44px;
+  background: linear-gradient(180deg, var(--accent), transparent);
   animation: pulse 1.8s ease-in-out infinite;
 }
 
@@ -705,6 +705,9 @@ section {
 .marquee__track {
   display: flex;
   gap: 30px;
+  flex-wrap: nowrap;
+  width: max-content;
+  will-change: transform;
   animation: marquee 24s linear infinite;
 }
 
@@ -715,6 +718,7 @@ section {
 
 .marquee__item {
   min-width: 120px;
+  flex: 0 0 auto;
   padding: 16px;
   border-radius: 14px;
   border: 1px solid var(--stroke);

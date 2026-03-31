@@ -274,18 +274,6 @@ function initializeAnimations() {
     });
   });
   
-  // Pause tech showcase on hover
-  const techShowcase = document.querySelector('.marquee__track');
-  if (techShowcase) {
-    techShowcase.addEventListener('mouseenter', () => {
-      techShowcase.style.animationPlayState = 'paused';
-    });
-    
-    techShowcase.addEventListener('mouseleave', () => {
-      techShowcase.style.animationPlayState = 'running';
-    });
-  }
-  
   // Add magnetic effect to buttons
   const buttons = document.querySelectorAll('.btn');
   buttons.forEach(button => {
